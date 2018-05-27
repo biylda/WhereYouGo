@@ -9,6 +9,7 @@ import android.content.res.Configuration;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -117,6 +118,18 @@ public class XmlSettingsActivity extends PreferenceActivity
                     }
                 }
             }
+        }
+
+        /*
+         * Enable/disable status bar propertie
+         */
+        CheckBoxPreference status_bar = (CheckBoxPreference) findPreference(R.string.pref_KEY_B_STATUSBAR);
+        CheckBoxPreference gps_hide = (CheckBoxPreference) findPreference(R.string.pref_KEY_B_GPS_DISABLE_WHEN_HIDE);
+        CheckBoxPreference gps_guiding = (CheckBoxPreference) findPreference(R.string.pref_KEY_B_GUIDING_GPS_REQUIRED);
+        if (gps_hide.isChecked()) {
+            status_bar.setEnabled(!gps_guiding.isChecked());
+        } else {
+            status_bar.setEnabled(false);
         }
     }
 
@@ -230,12 +243,25 @@ public class XmlSettingsActivity extends PreferenceActivity
         } else if (Preferences.comparePreferenceKey(key, R.string.pref_KEY_B_GPS_DISABLE_WHEN_HIDE)) {
             boolean newValue = sharedPreferences.getBoolean(key, false);
             Preferences.GPS_DISABLE_WHEN_HIDE = Utils.parseBoolean(newValue);
+            CheckBoxPreference status_bar = (CheckBoxPreference) findPreference(R.string.pref_KEY_B_STATUSBAR);
+            CheckBoxPreference gps_guideing = (CheckBoxPreference) findPreference(R.string.pref_KEY_B_GUIDING_GPS_REQUIRED);
+            if (newValue) {
+                if (gps_guideing.isChecked()) {
+                    status_bar.setEnabled(false);
+                } else {
+                    status_bar.setEnabled(true);
+                }
+            } else {
+                status_bar.setEnabled(false);
+            }
         } else if (Preferences.comparePreferenceKey(key, R.string.pref_KEY_B_GUIDING_COMPASS_SOUNDS)) {
             boolean newValue = sharedPreferences.getBoolean(key, false);
             Preferences.GUIDING_SOUNDS = Utils.parseBoolean(newValue);
         } else if (Preferences.comparePreferenceKey(key, R.string.pref_KEY_B_GUIDING_GPS_REQUIRED)) {
             boolean newValue = sharedPreferences.getBoolean(key, false);
             Preferences.GUIDING_GPS_REQUIRED = Utils.parseBoolean(newValue);
+            CheckBoxPreference status_bar = (CheckBoxPreference) findPreference(R.string.pref_KEY_B_STATUSBAR);
+            status_bar.setEnabled(!newValue);
         } else if (Preferences.comparePreferenceKey(key, R.string.pref_KEY_S_GUIDING_WAYPOINT_SOUND)) {
             String newValue = sharedPreferences.getString(key, null);
             int result = Utils.parseInt(newValue);
