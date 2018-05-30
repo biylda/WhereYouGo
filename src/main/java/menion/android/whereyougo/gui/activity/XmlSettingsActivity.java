@@ -1,3 +1,24 @@
+/*
+ * This file is part of WhereYouGo.
+ *
+ * WhereYouGo is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * WhereYouGo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with WhereYouGo. If not,
+ * see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright (C) 2012 Menion <whereyougo@asamm.cz>
+ *
+ * Changes:
+ * Date         Who                    Detail
+ * 30.05.2018   Kurly1                 Add support for partial WakeLock (KEY_B_RUN_SCREEN_OFF)
+ */
+
 package menion.android.whereyougo.gui.activity;
 
 import android.app.Activity;
@@ -353,6 +374,10 @@ public class XmlSettingsActivity extends PreferenceActivity
         } else if (Preferences.comparePreferenceKey(key, R.string.pref_KEY_S_UNITS_SPEED)) {
             String newValue = sharedPreferences.getString(key, null);
             Preferences.FORMAT_SPEED = Utils.parseInt(newValue);
+        } else if (Preferences.comparePreferenceKey(key, R.string.pref_KEY_B_RUN_SCREEN_OFF)) {
+            boolean newValue = sharedPreferences.getBoolean(key, false);
+            Preferences.GLOBAL_RUN_SCREEN_OFF = Utils.parseBoolean(newValue);
+            PreferenceValues.enableWakeLock();
         }
     }
 

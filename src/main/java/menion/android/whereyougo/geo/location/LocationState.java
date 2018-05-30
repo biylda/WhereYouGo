@@ -13,6 +13,10 @@
  * see <http://www.gnu.org/licenses/>.
  * 
  * Copyright (C) 2012 Menion <whereyougo@asamm.cz>
+ *
+ * Changes:
+ * Date         Who                    Detail
+ * 30.05.2018   Kurly1                 Add support for partial WakeLock
  */
 
 package menion.android.whereyougo.geo.location;
@@ -200,7 +204,11 @@ public class LocationState {
 
             // also disable wake-lock here
             if (!PreferenceValues.existCurrentActivity() || screenOff) {
-                PreferenceValues.disableWakeLock();
+                if (Preferences.GLOBAL_RUN_SCREEN_OFF){
+                    PreferenceValues.enableWakeLock();
+                } else {
+                    PreferenceValues.disableWakeLock();
+                }
             }
 
             // do not change gps state when ...
