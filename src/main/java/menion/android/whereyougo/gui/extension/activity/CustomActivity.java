@@ -13,6 +13,11 @@
  * see <http://www.gnu.org/licenses/>.
  * 
  * Copyright (C) 2012 Menion <whereyougo@asamm.cz>
+ *
+ * Changes:
+ * Date         Who                    Detail
+ * 30.05.2018   Kurly1                 Replaced setStatusbar function to use the NotificationService class
+ *
  */
 
 package menion.android.whereyougo.gui.extension.activity;
@@ -23,6 +28,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
@@ -110,9 +116,19 @@ public class CustomActivity extends FragmentActivity {
     public static void setStatusbar(Activity activity) {
         try {
             Intent intent = new Intent(activity, NotificationService.class);
-            if (!Preferences.GPS_DISABLE_WHEN_HIDE || (Preferences.GPS_DISABLE_WHEN_HIDE && Preferences.GUIDING_GPS_REQUIRED)) {
-                intent.setAction(NotificationService.START_NOTIFICATION_SERVICE_FOREGROUND);
-                activity.startService(intent);
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
+                if (!Preferences.GPS_DISABLE_WHEN_HIDE || (Preferences.GPS_DISABLE_WHEN_HIDE && Preferences.GUIDING_GPS_REQUIRED)) {
+                    intent.setAction(NotificationService.START_NOTIFICATION_SERVICE_FOREGROUND);
+                    activity.startService(intent);
+                } else {
+                    if (Preferences.APPEARANCE_STATUSBAR) {
+                        intent.setAction(NotificationService.START_NOTIFICATION_SERVICE);
+                        activity.startService(intent);
+                    } else {
+                        intent.setAction(NotificationService.STOP_NOTIFICATION_SERVICE);
+                        activity.startService(intent);
+                    }
+                }
             } else {
                 if (Preferences.APPEARANCE_STATUSBAR) {
                     intent.setAction(NotificationService.START_NOTIFICATION_SERVICE);

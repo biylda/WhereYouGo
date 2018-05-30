@@ -34,7 +34,7 @@
     <string name="pref_guiding">Routenführung</string>
     <string name="pref_guiding_compass_sounds">Klänge während der Führung</string>
     <string name="pref_guiding_compass_sounds_desc">Aktivieren / Deaktivieren von Sounds während der Führung</string>
-    <string name="pref_guiding_gps_required_desc">GPS angeschaltet lassen, wenn die Anwendung während der Routenführung minimiert ist</string>
+    <string name="pref_guiding_gps_required_desc">GPS angeschaltet lassen, wenn die Anwendung während der Routenführung minimiert ist (dies schaltet das Statusbar-Symbol ein)</string>
     <string name="pref_guiding_sound_distance">Entfernung für Signaltöne</string>
     <string name="pref_guiding_sound_distance_waypoint_desc">Entfernung (Meter), die für Signaltöne benutzt werden. Startwert für die Erhöhung oder nur ein Wert für einen Piepton</string>
     <string name="pref_guiding_sound_type">Art des Signaltons</string>
@@ -78,7 +78,7 @@
     <string name="pref_sensors_orient_filter_medium">Mittlerer Filter</string>
     <string name="pref_sensors_orient_filter_no_filter">Kein Filter</string>
     <string name="pref_statusbar">Statusbar-Symbol</string>
-    <string name="pref_statusbar_desc">Symbol in der Statusbar anzeigen</string>
+    <string name="pref_statusbar_desc">Symbol in der Statusbar anzeigen (wen diese Option nicht verfügbar ist, wird die Statusbar durch eine andere Funktion benötigt und ist eingeschalten)</string>
     <string name="pref_style_on_map">Stil der Karte</string>
     <string name="pref_units">Formate</string>
     <string name="pref_units_altitude">Höheneinheit</string>
