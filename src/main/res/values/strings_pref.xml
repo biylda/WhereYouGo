@@ -34,7 +34,7 @@
     <string name="pref_guiding">Guiding</string>
     <string name="pref_guiding_compass_sounds">Guiding sounds</string>
     <string name="pref_guiding_compass_sounds_desc">Enable/disable sounds during guiding</string>
-    <string name="pref_guiding_gps_required_desc">Leave GPS on, when app is hidden during guiding (this switches the statusbar icon on)</string>
+    <string name="pref_guiding_gps_required_desc">Leave GPS on, when app is hidden during guiding</string>
     <string name="pref_guiding_sound_distance">Sound distance</string>
     <string name="pref_guiding_sound_distance_waypoint_desc">Distance (metres) used in sounds. Start value for increasing or just a value for one beep</string>
     <string name="pref_guiding_sound_type">Type of sound notification</string>
@@ -84,7 +84,7 @@
     <string name="pref_sensors_orient_filter_medium">Medium filter</string>
     <string name="pref_sensors_orient_filter_no_filter">No filtration</string>
     <string name="pref_statusbar">Statusbar Icon</string>
-    <string name="pref_statusbar_desc">Show icon in statusbar (If this option is available the Statusbar is forced by a other future.)</string>
+    <string name="pref_statusbar_desc">Show icon in statusbar (if this option is not available the statusbar is required on by a other feature.)</string>
     <string name="pref_style_on_map">Style on map</string>
     <string name="pref_units">Units</string>
     <string name="pref_units_altitude">Altitude units</string>
