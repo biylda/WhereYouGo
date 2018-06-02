@@ -29,11 +29,12 @@
  *
  *   STOP_NOTIFICATION_SERVICE               This will stop the notification service.
  *
- * Author: kurly1  30.05.2018
+ * Author: kurly1  27.05.2018
  *
  * Changes:
  * Date         Who                    Detail
  * 30.05.2018   Kurly1                 Code cleanup
+ * 02.06.2018   Kurly1                 Removed dependencies to A class.
  */
 
 package menion.android.whereyougo.utils;
@@ -56,13 +57,12 @@ public class NotificationService extends Service {
     private boolean foreground = false;
     private boolean runing = false;
     private NotificationManager mNM;
+    private String ContentTitel;
 
+    public static final String Titel = "ContentTitel";
     public static final String START_NOTIFICATION_SERVICE = "START_NOTIFICATION_SERVICE";
     public static final String START_NOTIFICATION_SERVICE_FOREGROUND = "START_NOTIFICATION_SERVICE_FOREGROUND";
     public static final String STOP_NOTIFICATION_SERVICE = "STOP_NOTIFICATION_SERVICE";
-
-    public NotificationService() {
-    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -83,9 +83,11 @@ public class NotificationService extends Service {
             String action = intent.getAction();
             switch (action) {
                 case START_NOTIFICATION_SERVICE:
+                    ContentTitel = intent.getStringExtra(Titel);
                     startNotificationService(true);
                     break;
                 case START_NOTIFICATION_SERVICE_FOREGROUND:
+                    ContentTitel = intent.getStringExtra(Titel);
                     startNotificationService(false);
                     break;
                 case STOP_NOTIFICATION_SERVICE:
@@ -99,14 +101,13 @@ public class NotificationService extends Service {
     private void startNotificationService(boolean background) {
         Logger.v(this.getClass().getName(), "Start notification service.");
 
-        Context context = A.getMain().getApplicationContext();
-        Intent intent = new Intent(context, menion.android.whereyougo.gui.activity.MainActivity.class);
+        Intent intent = new Intent(this, menion.android.whereyougo.gui.activity.MainActivity.class);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         intent.setAction(Intent.ACTION_MAIN);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setContentTitle(A.getAppName());
+        builder.setContentTitle(ContentTitel);
         builder.setSmallIcon(R.drawable.ic_title_logo);
         builder.setContentIntent(pendingIntent);
         builder.setOngoing(true);

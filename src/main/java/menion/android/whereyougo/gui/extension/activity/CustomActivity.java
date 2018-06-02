@@ -116,6 +116,7 @@ public class CustomActivity extends FragmentActivity {
     public static void setStatusbar(Activity activity) {
         try {
             Intent intent = new Intent(activity, NotificationService.class);
+            intent.putExtra(NotificationService.Titel, A.getAppName());
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
                 if (!Preferences.GPS_DISABLE_WHEN_HIDE || (Preferences.GPS_DISABLE_WHEN_HIDE && Preferences.GUIDING_GPS_REQUIRED)) {
                     intent.setAction(NotificationService.START_NOTIFICATION_SERVICE_FOREGROUND);
