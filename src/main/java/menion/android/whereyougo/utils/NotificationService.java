@@ -35,6 +35,7 @@
  * Date         Who                    Detail
  * 30.05.2018   Kurly1                 Code cleanup
  * 02.06.2018   Kurly1                 Removed dependencies to A class.
+ * 05.06.2018   Kurly1                 fixed some naming conventions
  */
 
 package menion.android.whereyougo.utils;
@@ -57,9 +58,9 @@ public class NotificationService extends Service {
     private boolean foreground = false;
     private boolean runing = false;
     private NotificationManager mNM;
-    private String ContentTitel;
+    private String contentTitel;
 
-    public static final String Titel = "ContentTitel";
+    public static final String TITEL = "ContentTitel";
     public static final String START_NOTIFICATION_SERVICE = "START_NOTIFICATION_SERVICE";
     public static final String START_NOTIFICATION_SERVICE_FOREGROUND = "START_NOTIFICATION_SERVICE_FOREGROUND";
     public static final String STOP_NOTIFICATION_SERVICE = "STOP_NOTIFICATION_SERVICE";
@@ -83,11 +84,11 @@ public class NotificationService extends Service {
             String action = intent.getAction();
             switch (action) {
                 case START_NOTIFICATION_SERVICE:
-                    ContentTitel = intent.getStringExtra(Titel);
+                    contentTitel = intent.getStringExtra(TITEL);
                     startNotificationService(true);
                     break;
                 case START_NOTIFICATION_SERVICE_FOREGROUND:
-                    ContentTitel = intent.getStringExtra(Titel);
+                    contentTitel = intent.getStringExtra(TITEL);
                     startNotificationService(false);
                     break;
                 case STOP_NOTIFICATION_SERVICE:
@@ -107,7 +108,7 @@ public class NotificationService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setContentTitle(ContentTitel);
+        builder.setContentTitle(contentTitel);
         builder.setSmallIcon(R.drawable.ic_title_logo);
         builder.setContentIntent(pendingIntent);
         builder.setOngoing(true);
