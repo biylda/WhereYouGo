@@ -146,7 +146,7 @@ public class PreferenceValues {
                 }
             }
             Logger.w(TAG, "enableWakeLock(), dis:" + disable + " level:" + new_level + ", wl:" + wl + " current level:" + wl_level);
-            if ((disable && wl != null) || new_level == 0) {
+            if ((disable || new_level == 0) && wl != null) {
                 disableWakeLock();
             } else if (!disable && new_level != wl_level) {
                 if (wl != null) {
