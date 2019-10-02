@@ -26,7 +26,7 @@
     <string name="pref_gps_altitude_manual_correction_desc">Manuelle Korrektur der Meereshöhe</string>
     <string name="pref_gps_beep_on_gps_fix">Signalton bei GPS-Fix</string>
     <string name="pref_gps_beep_on_gps_fix_desc">Signalton, wenn das GPS die erste richtige Position erkannt hat</string>
-    <string name="pref_gps_desc">GPS automatisch einschalten mit die App</string>
+    <string name="pref_gps_desc">GPS mit der App starten</string>
     <string name="pref_gps_disable">Deaktivieren, wenn ausgeblendet</string>
     <string name="pref_gps_disable_desc">GPS deaktivieren, wenn der Bildschirm abgeschaltet wird oder die Anwendung minimiert wird und GPS von keiner Funktion benutzt wird</string>
     <string name="pref_gps_min_time">Zeit zwischen GPS-Abfragen</string>
@@ -78,7 +78,7 @@
     <string name="pref_sensors_orient_filter_medium">Mittlerer Filter</string>
     <string name="pref_sensors_orient_filter_no_filter">Kein Filter</string>
     <string name="pref_statusbar">Statusbar-Symbol</string>
-    <string name="pref_statusbar_desc">Symbol in der Statusbar anzeigen</string>
+    <string name="pref_statusbar_desc">Symbol in der Statusbar anzeigen (wen diese Option nicht verfügbar ist, wird die Statusbar durch eine andere Funktion benötigt und ist eingeschalten)</string>
     <string name="pref_style_on_map">Stil der Karte</string>
     <string name="pref_units">Formate</string>
     <string name="pref_units_altitude">Höheneinheit</string>

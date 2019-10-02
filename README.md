@@ -3,9 +3,14 @@ WhereYouGo
 
 WhereYouGo project has moved to GitHub.
 
-original project https://code.google.com/p/android-whereyougo/
-my project on Google Code https://code.google.com/r/biylda-whereyougo/
-this project on GitHub https://github.com/biylda/WhereYouGo/
+* Original project can be found [here](https://code.google.com/p/android-whereyougo/)
+* My project on Google Code can be found [here](https://code.google.com/r/biylda-whereyougo/)
+* This project on GitHub [here](https://github.com/biylda/WhereYouGo/)
+
+<a href="https://f-droid.org/packages/menion.android.whereyougo/" target="_blank">
+<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80"/></a>
+<a href="https://play.google.com/store/apps/details?id=menion.android.whereyougo" target="_blank">
+<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80"/></a>
 
 ## About
 

@@ -49,10 +49,13 @@ android {
         minSdkVersion 15
         targetSdkVersion 28
     }
-
+    
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    signingConfigs {
     }
 
     buildTypes {
@@ -64,7 +67,7 @@ android {
             debuggable true
         }
     }
-
+    
     lintOptions {
         abortOnError false
         checkReleaseBuilds false

@@ -1,3 +1,22 @@
+/*
+ * This file is part of WhereYouGo.
+ *
+ * WhereYouGo is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * WhereYouGo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with WhereYouGo. If not,
+ * see <http://www.gnu.org/licenses/>.
+ *
+ * Changes:
+ * Date         Who                    Detail
+ * 30.05.2018   Kurly1                 Added code to enable and disable KEY_B_STATUSBAR
+ */
+
 package menion.android.whereyougo.gui.activity;
 
 import android.app.Activity;
@@ -8,7 +27,9 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -116,6 +137,20 @@ public class XmlSettingsActivity extends PreferenceActivity
                         break;
                     }
                 }
+            }
+        }
+
+        /*
+         * Enable/disable status bar propertie
+         */
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
+            CheckBoxPreference status_bar = (CheckBoxPreference) findPreference(R.string.pref_KEY_B_STATUSBAR);
+            CheckBoxPreference gps_hide = (CheckBoxPreference) findPreference(R.string.pref_KEY_B_GPS_DISABLE_WHEN_HIDE);
+            CheckBoxPreference gps_guiding = (CheckBoxPreference) findPreference(R.string.pref_KEY_B_GUIDING_GPS_REQUIRED);
+            if (gps_hide.isChecked()) {
+                status_bar.setEnabled(!gps_guiding.isChecked());
+            } else {
+                status_bar.setEnabled(false);
             }
         }
     }
@@ -230,12 +265,29 @@ public class XmlSettingsActivity extends PreferenceActivity
         } else if (Preferences.comparePreferenceKey(key, R.string.pref_KEY_B_GPS_DISABLE_WHEN_HIDE)) {
             boolean newValue = sharedPreferences.getBoolean(key, false);
             Preferences.GPS_DISABLE_WHEN_HIDE = Utils.parseBoolean(newValue);
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
+                CheckBoxPreference status_bar = (CheckBoxPreference) findPreference(R.string.pref_KEY_B_STATUSBAR);
+                CheckBoxPreference gps_guideing = (CheckBoxPreference) findPreference(R.string.pref_KEY_B_GUIDING_GPS_REQUIRED);
+                if (newValue) {
+                    if (gps_guideing.isChecked()) {
+                        status_bar.setEnabled(false);
+                    } else {
+                        status_bar.setEnabled(true);
+                    }
+                } else {
+                    status_bar.setEnabled(false);
+                }
+            }
         } else if (Preferences.comparePreferenceKey(key, R.string.pref_KEY_B_GUIDING_COMPASS_SOUNDS)) {
             boolean newValue = sharedPreferences.getBoolean(key, false);
             Preferences.GUIDING_SOUNDS = Utils.parseBoolean(newValue);
         } else if (Preferences.comparePreferenceKey(key, R.string.pref_KEY_B_GUIDING_GPS_REQUIRED)) {
             boolean newValue = sharedPreferences.getBoolean(key, false);
             Preferences.GUIDING_GPS_REQUIRED = Utils.parseBoolean(newValue);
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
+                CheckBoxPreference status_bar = (CheckBoxPreference) findPreference(R.string.pref_KEY_B_STATUSBAR);
+                status_bar.setEnabled(!newValue);
+            }
         } else if (Preferences.comparePreferenceKey(key, R.string.pref_KEY_S_GUIDING_WAYPOINT_SOUND)) {
             String newValue = sharedPreferences.getString(key, null);
             int result = Utils.parseInt(newValue);
