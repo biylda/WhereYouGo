@@ -13,6 +13,11 @@
  * see <http://www.gnu.org/licenses/>.
  * 
  * Copyright (C) 2012 Menion <whereyougo@asamm.cz>
+ *
+ * Changes:
+ * Date         Who                    Detail
+ * 30.05.2018   Kurly1                 Replaced setStatusbar function to use the NotificationService class
+ *
  */
 
 package menion.android.whereyougo.gui.extension.activity;
@@ -23,6 +28,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
@@ -34,11 +40,13 @@ import android.view.WindowManager;
 
 import menion.android.whereyougo.MainApplication;
 import menion.android.whereyougo.R;
+import menion.android.whereyougo.gui.activity.MainActivity;
 import menion.android.whereyougo.preferences.PreferenceValues;
 import menion.android.whereyougo.preferences.Preferences;
 import menion.android.whereyougo.utils.A;
 import menion.android.whereyougo.utils.Const;
 import menion.android.whereyougo.utils.Logger;
+import menion.android.whereyougo.utils.NotificationService;
 
 public class CustomActivity extends FragmentActivity {
 
@@ -107,24 +115,29 @@ public class CustomActivity extends FragmentActivity {
 
     public static void setStatusbar(Activity activity) {
         try {
-            NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
-            // set statusbar
-            if (Preferences.APPEARANCE_STATUSBAR) {
-                Context context = activity.getApplicationContext();
-                Intent intent = new Intent(context, menion.android.whereyougo.gui.activity.MainActivity.class);
-                // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                intent.setAction(Intent.ACTION_MAIN);
-                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-                Notification notification = new NotificationCompat.Builder(activity)
-                        .setContentTitle(A.getAppName())
-                        .setSmallIcon(R.drawable.ic_title_logo)
-                        .setContentIntent(pendingIntent)
-                        .setOngoing(true)
-                        .build();
-                notificationManager.notify(0, notification);
+            Intent intent = new Intent(activity, NotificationService.class);
+            intent.putExtra(NotificationService.TITEL, A.getAppName());
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
+                if (!Preferences.GPS_DISABLE_WHEN_HIDE || (Preferences.GPS_DISABLE_WHEN_HIDE && Preferences.GUIDING_GPS_REQUIRED)) {
+                    intent.setAction(NotificationService.START_NOTIFICATION_SERVICE_FOREGROUND);
+                    activity.startService(intent);
+                } else {
+                    if (Preferences.APPEARANCE_STATUSBAR) {
+                        intent.setAction(NotificationService.START_NOTIFICATION_SERVICE);
+                        activity.startService(intent);
+                    } else {
+                        intent.setAction(NotificationService.STOP_NOTIFICATION_SERVICE);
+                        activity.startService(intent);
+                    }
+                }
             } else {
-                notificationManager.cancel(0);
+                if (Preferences.APPEARANCE_STATUSBAR) {
+                    intent.setAction(NotificationService.START_NOTIFICATION_SERVICE);
+                    activity.startService(intent);
+                } else {
+                    intent.setAction(NotificationService.STOP_NOTIFICATION_SERVICE);
+                    activity.startService(intent);
+                }
             }
         } catch (Exception e) {
             // Logger.e(TAG, "setStatusbar(" + activity + ")", e);
